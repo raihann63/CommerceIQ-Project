@@ -1,0 +1,122 @@
+// =====================================================================
+// CommerceIQ | Power BI | Date table + Page 1 (Executive Overview) measures
+// HOW TO USE: Power BI Desktop > Modeling tab.
+//   * Date table  -> "New table", paste the DimDate block.
+//   * Each measure -> "New measure", paste ONE block at a time
+//     (one measure per New measure click).
+// Table names assume you loaded from the "analytics" schema:
+//   fact_orders, fact_order_items, fact_payments, dim_customer,
+//   dim_product, dim_seller
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+// 1) DATE TABLE  (Modeling > New table)
+// After creating: Table tools > Mark as date table > choose [Date]
+// ---------------------------------------------------------------------
+DimDate =
+ADDCOLUMNS (
+    CALENDAR ( DATE ( 2016, 9, 1 ), DATE ( 2018, 10, 31 ) ),
+    "Year", YEAR ( [Date] ),
+    "Month Number", MONTH ( [Date] ),
+    "Month", FORMAT ( [Date], "MMM" ),
+    "Year-Month", FORMAT ( [Date], "YYYY-MM" ),
+    "Month Start", DATE ( YEAR ( [Date] ), MONTH ( [Date] ), 1 )
+)
+
+
+// ---------------------------------------------------------------------
+// 2) PAGE 1 KPI MEASURES  (Modeling > New measure, one by one)
+// Business rules (same as SQL layer):
+//   valid order      = not canceled/unavailable AND has at least 1 item
+//   revenue          = item price only (freight separate, payment_value NOT used)
+//   delivery-eligible = status delivered AND delivered date present
+//   late             = delivered DATE > estimated DATE
+// ---------------------------------------------------------------------
+
+Total Revenue =
+CALCULATE (
+    SUM ( fact_order_items[price] ),
+    fact_order_items[is_valid_order] = TRUE ()
+)
+
+Total Orders =
+CALCULATE (
+    DISTINCTCOUNT ( fact_order_items[order_id] ),
+    fact_order_items[is_valid_order] = TRUE ()
+)
+
+Average Order Value =
+DIVIDE ( [Total Revenue], [Total Orders] )
+
+Unique Customers =
+CALCULATE (
+    DISTINCTCOUNT ( fact_orders[customer_unique_id] ),
+    fact_orders[is_valid_order] = TRUE ()
+)
+
+Delivered Orders =
+CALCULATE (
+    COUNTROWS ( fact_orders ),
+    fact_orders[is_delivery_eligible] = TRUE ()
+)
+
+Late Orders =
+CALCULATE (
+    COUNTROWS ( fact_orders ),
+    fact_orders[is_delivery_eligible] = TRUE (),
+    fact_orders[is_late] = TRUE ()
+)
+
+On-time Delivery Rate =
+DIVIDE ( [Delivered Orders] - [Late Orders], [Delivered Orders] )
+
+Late Delivery Rate =
+DIVIDE ( [Late Orders], [Delivered Orders] )
+
+Average Review Score =
+CALCULATE (
+    AVERAGE ( fact_orders[review_score] ),
+    fact_orders[is_valid_order] = TRUE ()
+)
+
+
+// ---------------------------------------------------------------------
+// 3) EXTRA MEASURES (add now, used on later pages)
+// ---------------------------------------------------------------------
+
+Total Freight =
+CALCULATE (
+    SUM ( fact_order_items[freight_value] ),
+    fact_order_items[is_valid_order] = TRUE ()
+)
+
+Total Reviews =
+CALCULATE (
+    COUNTROWS ( fact_orders ),
+    fact_orders[is_valid_order] = TRUE (),
+    fact_orders[review_score] <> BLANK ()
+)
+
+Low Rating Rate =
+DIVIDE (
+    CALCULATE (
+        COUNTROWS ( fact_orders ),
+        fact_orders[is_valid_order] = TRUE (),
+        fact_orders[review_score] <= 2
+    ),
+    [Total Reviews]
+)
+
+Average Delivery Days =
+CALCULATE (
+    AVERAGE ( fact_orders[delivery_days] ),
+    fact_orders[is_delivery_eligible] = TRUE ()
+)
+
+Average Delay Days (Late Orders) =
+CALCULATE (
+    AVERAGE ( fact_orders[delay_days] ),
+    fact_orders[is_delivery_eligible] = TRUE (),
+    fact_orders[is_late] = TRUE ()
+)
