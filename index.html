@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CommerceIQ - SQL & Power BI Portfolio</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #f4f6f9; color: #333; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h1 { color: #118d95; border-bottom: 2px solid #118d95; padding-bottom: 10px; margin-top: 0; }
+        h2 { color: #2b3e50; margin-top: 30px; border-left: 4px solid #118d95; padding-left: 10px; }
+        .btn-download { display: inline-block; background-color: #f2c811; color: #333; padding: 12px 20px; text-decoration: none; font-weight: bold; border-radius: 5px; margin: 15px 10px 15px 0; transition: 0.3s; }
+        .btn-download:hover { background-color: #dcb50f; }
+        .btn-secondary { background-color: #2b3e50; color: white; }
+        .btn-secondary:hover { background-color: #1a252f; }
+        .insight-box { background-color: #fdfdfd; border-left: 5px solid #118d95; padding: 20px; margin: 20px 0; border-radius: 4px; box-shadow: inset 0 0 10px rgba(0,0,0,0.01); }
+        .insight-box h3 { margin-top: 0; color: #118d95; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+        .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; color: #777; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛒 CommerceIQ: End-to-End E-Commerce Analytics</h1>
+        <p>PostgreSQL এবং Power BI ব্যবহার করে ওলিস্ট (Olist) ব্রাজিলিয়ান ই-কমার্স ডেটাসেটের ওপর ভিত্তি করে তৈরি একটি সম্পূর্ণ ডেটা অ্যানালিটিক্স প্রজেক্ট। এই রিপোজিটরিতে সম্পূর্ণ ডেটা ক্লিনিং, ভ্যালিডেশন স্ক্রিপ্ট এবং ড্যাশবোর্ড সোর্স ফাইল অন্তর্ভুক্ত রয়েছে।</p>
+        
+        <!-- ডাউনলোড বাটনসমূহ -->
+        <a href="CommerceIQ.pbix" class="btn-download" download>📥 Power BI ফাইল (.pbix) ডাউনলোড করুন</a>
+        <a href="https://github.com" class="btn-download btn-secondary" target="_blank">💻 SQL স্ক্রিপ্ট দেখুন</a>
+
+        <div class="insight-box">
+            <h3>📌 মূল বিজনেস ইনসাইটস (Key Business Insights)</h3>
+            <ul>
+                <li><strong>রিটেনশন চ্যালেঞ্জ (Retention):</strong> আমাদের ৯২ হাজারের বেশি ক্রেতা ওয়ান-টাইম কাস্টমার। সামগ্রিক রিপিট কাস্টমার রেট মাত্র <strong>3.04%</strong>।</li>
+                <li><strong>ডেলিভারির প্রভাব (Delivery & Ratings):</strong> অন-টাইম অর্ডারের গড় রিভিউ যেখানে <strong>4.29</strong>, সেখানে ডেলিভারি <strong>৮+ দিন লেট হলে</strong> রেটিং আশঙ্কাজনকভাবে <strong>1.70</strong>-এ নেমে আসে। কাস্টমার অসন্তুষ্টির প্রধান কারণ ডেলিভারি বিলম্ব।</li>
+                <li><strong>আঞ্চলিক পারফরম্যান্স (Regional Leader):</strong> মোট রেভিনিউর এককভাবে <strong>38.27%</strong> জেনারেট করে বিক্রির শীর্ষে রয়েছে <strong>SP (São Paulo)</strong> রাজ্য。</li>
+                <li><strong>পেমেন্ট ট্রেন্ড (Payment Behavior):</strong> ক্রেতাদের মধ্যে ক্রেডিট কার্ডের ব্যবহার সবচেয়ে জনপ্রিয় (<strong>78.47%</strong> পেমেন্ট ভ্যালু) এবং <strong>51.51%</strong> ক্রেতা কিস্তিতে (Installment) পেমেন্ট করতে পছন্দ করেন।</li>
+            </ul>
+        </div>
+
+        <h2>🛠 প্রজেক্টের প্রযুক্তিগত ধাপসমূহ (Technical Stack)</h2>
+        <ul>
+            <li><strong>PostgreSQL:</strong> ডাটাবেজ ইমপোর্ট, ডেটা ক্লিনিং, টাইম-সিরিজ অ্যানালিসিস এবং মূল KPI ম্যাট্রিক্স ক্যালকুলেশন।</li>
+            <li><strong>Power BI / DAX:</strong> রিয়েল-টাইম ডাটা মডেলিং, কাস্টম `AVERAGEX` ও `SWITCH` লজিক ব্যবহার করে ৬-পেজের ইন্টারঅ্যাক্টিভ ড্যাশবোর্ড তৈরি।</li>
+            <li><strong>Data Validation:</strong> SQL কোয়েরির ফলাফলের সাথে পাওয়ার বিআই ভিজ্যুয়ালের সংখ্যা শতভাগ মিলিয়ে নিখুঁত ডেটা ভ্যালিডেশন নিশ্চিতকরণ।</li>
+        </ul>
+
+        <div class="footer">
+            <p>Designed as a Data Analyst Portfolio Project | Source: Olist Dataset</p>
+        </div>
+    </div>
+</body>
+</html>
